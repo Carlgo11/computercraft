@@ -9,5 +9,5 @@ This repository is not afiliated with the ComputerCraft Minecraft mod or Dan200 
 
 ### Licensing
 The code in this repository is licensed under [Unlicense](LICENSE) which waves the creator([Carlgo11](https://github.com/Carlgo11)) the licensing rights.  
-Please note that this only applies for the code in this repository and not the ComputerCraft API as mentioned earlier.
+Please note that this only applies for the code in this repository and not the ComputerCraft API as mentioned earlier.  
 ![unlicense logo](http://unlicense.org/pd-icon.png)
