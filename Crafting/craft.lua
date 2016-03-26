@@ -1,3 +1,13 @@
+-- Crafting Recipie.
+-- Usage: getItems([inventory slot], [item name])
+function craftingRecipie()
+    getItems(1, "minecraft:stone")
+    getItems(2, "minecraft:stone")
+    getItems(5, "minecraft:stone")
+    getItems(6, "minecraft:stone")
+end
+
+-- Description: Pulls items out of another inventory. (e.g. a chest)
 function getItems(slot, item_name)
     while (64-turtle.getItemCount(slot)) ~= 0 do
         items = (64-turtle.getItemCount(slot))
@@ -14,11 +24,9 @@ function getItems(slot, item_name)
     end
 end
 
+
 while true do
-    getItems(1, "minecraft:stone")
-    getItems(2, "minecraft:stone")
-    getItems(5, "minecraft:stone")
-    getItems(6, "minecraft:stone")
+    craftingRecipie()
     turtle.select(15)
     turtle.craft(64)
     if not turtle.dropUp() then
