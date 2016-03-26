@@ -3,6 +3,7 @@ if #args ~= 5 then
     print("Usage: <command> <sensor_position> <redstone_position> <accesslevel> <group> <url>")
     return
 end
+
 -- Edit the settings below
 local sensor_position = args[1]
 local redstone_position = args[2]
@@ -28,22 +29,28 @@ local info =
 }
 
 -- Functions
+function setTextColor(color_code)
+    if term.isColor() then
+        term.setTextColor(color_code) 
+    end
+end
+
 function startupText()
-    term.setTextColor(32)
+    setTextColor(32)
     print("Starting DoorAPI v"..version)
     print("")
-    term.setTextColor(16)
+    setTextColor(16)
     print("--- INFO ---")
     print("")
-    term.setTextColor(1)
+    setTextColor(1)
     for k,v in pairs(info) do
         print(k..": "..v)
     end
     print("")
-    term.setTextColor(16)
+    setTextColor(16)
     print("--- [END INFO] ---")
     print("")
-    term.setTextColor(16384)
+    setTextColor(16384)
 end
 
 function listenForPlayer()
@@ -53,12 +60,11 @@ function listenForPlayer()
         players = sensor.getPlayers()
         for _, player in pairs(players) do
             local headers = {
-                ["User-agent"] = "Carlgo Browser 1.0"
+                ["User-agent"] = "Carlgo11 Browser 1.0"
             }
-            url2 = url.."?player="..player["name"].."&group="..group
             responce = 0
             if accesslevel ~= 0 then
-                request = http.get(url2, headers)
+                request = http.get(url.."?player="..player["name"].."&group="..group, headers)
                 responce = tonumber(request.readAll())
             end
             if type(responce) == "number" then
