@@ -6,6 +6,7 @@ function checkFuel()
         turtle.select(3)
         turtle.suck()
         turtle.refuel()
+        turtle.turnLeft()
     end
 end
 
@@ -16,9 +17,9 @@ function checkItems()
         if i == 1 and n ~= 0 then
             turtle.turnLeft()
             turtle.suck(n)
+            turtle.turnRight()
         end
         if i == 2 and n ~= 0 then
-            turtle.turnRight()
             turtle.suckUp(n)
         end
     end
