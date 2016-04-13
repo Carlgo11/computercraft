@@ -1,4 +1,15 @@
+--[[
+   Wither spawning script
+   Public domain source code created by Carlgo11
+   For more information on the code and variables please visit https://github.com/Carlgo11/computercraft/tree/master/WitherSpawner
+]]--
+
 local minFuelLevel = 200 -- Lowest acceptable fuel level.
+local redstone_input_pos = "back" -- Redstone position (on for making wither)
+local redstone_output_pos = "bottom" --Redstone position (on for protecting the area while spawning the wither)
+local wither_spawning_delay = 10 -- Delay before spawning a new wither. (10 if the wither is killed instantly on spawning)
+local sleep_delay = 20 -- Delay before checking redstone_output_pos again.
+local isDebug = false
 
 function checkFuel()
     while turtle.getFuelLevel() < minFuelLevel do
@@ -25,11 +36,23 @@ function checkItems()
     end
 end
 
+function waitOnSpawning()
+    redstone.setOutput(redstone_output_pos, true)
+    sleep(wither_spawning_delay) 
+    redstone.setOutput(redstone_output_pos, false)
+end
+
+function debugMessage(message)
+    if isDebug then
+        print(message)
+    end
+end
+
 while true do
-    if redstone.getAnalogInput("back") == 15 then
+    if redstone.getAnalogInput(redstone_input_pos) == 15 then
         checkItems()
         checkFuel()
-        print("Making a wither...")
+        debugMessage("making a wither...")
         turtle.select(1)
         turtle.forward()
         turtle.forward()
@@ -63,10 +86,10 @@ while true do
         turtle.turnRight()
         turtle.back()
         turtle.back()
-        redstone.setOutput("bottom", true)
-        sleep(10) -- Time for spawning a Wither.
-        redstone.setOutput("bottom", false)
+        waitOnSpawning()
+        term.clear()
+        term.setCursorPos(1,1)
     else
-        sleep(20)
+        sleep(sleep_delay) -- Wait on redstone signal
     end
 end
