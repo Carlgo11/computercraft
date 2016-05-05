@@ -1,7 +1,17 @@
 local no_items_delay = 20 -- Delay when no more items are found
+local crafting_material = {"broken", "crushed"}
+
+function isRightMaterial(name)
+    for i=1,#crafting_material do
+        v = string.lower(crafting_material[i])
+        if string.match(name, v) then
+            return true
+        end
+    end
+    return false
+end
 
 function onNoMatch(name)
-    print("'"..name.."' is not a broken ore.")
     turtle.dropUp()
 end
 
@@ -27,14 +37,10 @@ function doCraft()
             local crafted_item = turtle.getItemDetail()
             if crafted_item then
                 local output_name = string.lower(crafted_item.name)
-                if string.match(output_name, "broken") then
+                if isRightMaterial(output_name) then
                     turtle.drop()
                 else
-                    turtle.turnLeft()
-                    turtle.turnLeft()
-                    turtle.drop()
-                    turtle.turnLeft()
-                    turtle.turnLeft()
+                    turtle.dropDown()
                 end
             end
         end
@@ -54,7 +60,7 @@ function onSearch()
         data = turtle.getItemDetail(turtle.getSelectedSlot())
         if data then
             name = string.lower(data.name)
-            if string.match(name, "broken") then
+            if isRightMaterial(name) then
                 if turtle.getItemCount() >= 4 then
                     skip_slot=turtle.getSelectedSlot()
                     break
@@ -82,7 +88,7 @@ while true do
         local data = turtle.getItemDetail(turtle.getSelectedSlot())
         if data then
             name = string.lower(data.name)
-            if string.match(name, "broken") then
+            if isRightMaterial(name) then
                 if turtle.getItemCount() >= 4 then
                     doCraft()
                 else
