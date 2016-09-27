@@ -24,7 +24,7 @@ function main() {
         $user = $_GET['player'];
         if (isset($_GET['group'])) {
             $table = $_GET['group'];
-            getAccessLevel(md5($table), $user);
+            getAccessLevel(base64_encode($table), $user);
         } else {
             die("group param isn't set.");
         }

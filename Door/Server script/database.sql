@@ -1,6 +1,6 @@
--- Creates table called '098f6bcd4621d373cade4e832627b4f6' which is a md5 hash of 'test'.
+-- Creates table called 'dGVzdAo=' which is a md5 hash of 'test'.
 
-CREATE TABLE `098f6bcd4621d373cade4e832627b4f6` (
+CREATE TABLE `dGVzdAo=` (
  `user` varchar(16) NOT NULL,
  `accesslevel` int(11) NOT NULL,
  PRIMARY KEY (`user`)
