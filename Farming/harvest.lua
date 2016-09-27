@@ -94,10 +94,12 @@ if checkArgs() then
 end
 
 function unloadAllItems()
-  for i = 16,1,-1 do
+  turtle.turnLeft()
+  for i = 16,2,-1 do
     turtle.select(i)
     turtle.drop()
   end
+  turtle.turnRight()
 end
 
 --checkFuel()
@@ -134,6 +136,6 @@ for x=0, (args[2]-1) do
     doNormalTurn(x)
   else
     doFinalTurn(x)
-    unloadItems()
+    unloadAllItems()
   end
 end
