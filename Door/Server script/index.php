@@ -19,12 +19,12 @@ function getAccessLevel($table, $user) {
 
 function main() {
     $user = NULL;
-    $tablpe = NULL;
+    $group = NULL;
     if (isset($_GET['player'])) {
         $user = $_GET['player'];
         if (isset($_GET['group'])) {
-            $table = $_GET['group'];
-            getAccessLevel(base64_encode($table), $user);
+            $group = $_GET['group'];
+            getAccessLevel(base64_encode($group), $user);
         } else {
             die("group param isn't set.");
         }
