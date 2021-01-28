@@ -14,11 +14,11 @@ local group = args[4]
 local sensor = peripheral.wrap(sensor_position)
 local url = args[5]
 local version = "1.3"
-local redstone_closedstate=true
-local redstone_openstate=false
+local redstone_closedstate = true
+local redstone_openstate = false
 local delay = 3
 local headers = {
-  ["User-agent"] = "DoorAPI Browser v"..version
+  ["User-agent"] = "DoorAPI Browser v" .. version
 }
 local info = {
   ["ID"] = os.getComputerID(),
@@ -39,14 +39,14 @@ end
 
 function startupText()
   setTextColor(32)
-  print("Starting DoorAPI v"..version)
+  print("Starting DoorAPI v" .. version)
   print("")
   setTextColor(16)
   print("--- [INFO] ---")
   print("")
   setTextColor(1)
-  for k,v in pairs(info) do
-    print(k..": "..v)
+  for k, v in pairs(info) do
+    print(k .. ": " .. v)
   end
   print("")
   setTextColor(16)
@@ -58,14 +58,14 @@ end
 function connectToDatabase(player, group)
   responce = 0
   if accesslevel ~= 0 then
-    request = http.get(url.."?player="..player["name"].."&group="..group, headers)
+    request = http.get(url .. "?player=" .. player["name"] .. "&group=" .. group, headers)
     responce = tonumber(request.readAll())
   end
   if type(responce) == "number" then
     group_cache[player["name"]] = responce
     return responce
   else
-    print("[Error] Repsonce: "..request.readAll())
+    print("[Error] Repsonce: " .. request.readAll())
     return 0
   end
 end
@@ -76,7 +76,6 @@ function listenForPlayer()
     redstone.setOutput(redstone_position, redstone_closedstate)
     players = sensor.getPlayers()
     for _, player in pairs(players) do
-
       responce = 0
       if type(group_cache[player["name"]]) == "nil" then
         responce = connectToDatabase(player, group)
