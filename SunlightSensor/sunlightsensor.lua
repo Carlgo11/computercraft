@@ -1,19 +1,16 @@
 local minlevel = 3
-local offValue = 0 -- Redstone value to output when sunlight is less than the minlevel
-local onValue = 15 - Redstone value to output when sunlight is more than the minlevel
-
-local time
+local offValue = false -- Redstone value to output when sunlight is less than the minlevel
+local onValue = true -- Redstone value to output when sunlight is more than the minlevel
 while true do
   os.pullEvent("redstone")
   sunlight = redstone.getAnalogInput("top")
-  print(sunlight) -- Prints sunlight level
   if sunlight > minlevel then
-    if redstone.getAnalogOutput("left") ~= onValue then
-      redstone.setAnalogOutput("left", onValue)
+    if redstone.getOutput("left") ~= onValue then
+      redstone.setOutput("left", onValue)
     end
   else
-    if redstone.getAnalogOutput("left") ~= offValue then
-      redstone.setAnalogOutput("left", offValue)
+    if redstone.getOutput("left") ~= offValue then
+      redstone.setOutput("left", offValue)
     end
   end
 end
