@@ -2,7 +2,7 @@ local args = {...}
 local direction
 
 -- Print usage
-if #args ~= 2 then
+if #args ~= 3 then
   print("Usage: harvest <x> <z> <left|right>")
   return
 else
@@ -12,7 +12,7 @@ end
 
 function checkItem(item)
   for i = 1, 16 do
-    if turtle.getItemDetail(i).name == item then
+    if turtle.getItemDetail(i) ~= nil and turtle.getItemDetail(i).name == item then
       return turtle.select(i)
     end
   end
@@ -30,7 +30,7 @@ function placeSeed()
   end
 end
 
-function turn(z)
+function nextRow(z)
   if z % 2 == 0 then
     turtle.turnLeft()
     turtle.forward()
@@ -38,6 +38,14 @@ function turn(z)
   else
     turtle.turnRight()
     turtle.forward()
+    turtle.turnRight()
+  end
+end
+
+function turn(z)
+  if (z) % 2 == 0 then
+    turtle.turnLeft()
+  else
     turtle.turnRight()
   end
 end
@@ -55,19 +63,21 @@ for z = 1, args[2] do
     if x == tonumber(args[1]) then
       if z == tonumber(args[2]) then
         -- Back up if odd z level
-        if z % 2 > 0 then
+        if z % 2 ~= 0 then
           for i = 1, x do
             turtle.back()
           end
         end
 
-        turn(z - direction)
-        for i = 1, z do
+        turn(z + direction - 1)
+        for _ = 1, z - 1 do
           turtle.forward()
         end
+        turn(z + direction - 1)
+      else
+        -- Turn facing specified direction to next x row
+        nextRow(z + direction)
       end
-      -- Turn facing specified direction to next x row
-      turn(z + direction)
     else
       while not turtle.forward() do
         turtle.dig()
